@@ -1,41 +1,41 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getRestaurants } from '../actions/restaurantAction';
-import "./css/count.css";
+import { getRestaurants } from "../actions/restaurantAction";
+import "../App.css";
 
 const CountRestaurant = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const { count, pureVegRestaurantsCount, showVegOnly, loading, error } =
+    useSelector((state) => state.restaurants);
 
-    const{count, pureVegRestaurantCount, showVegOnly, loading, error} =
-     useSelector((state)=> state.restaurants);
-
-     useEffect(()=>{
-        dispatch(getRestaurants());
-     }, [dispatch, showVegOnly]);
+  useEffect(() => {
+    dispatch(getRestaurants());
+  }, [dispatch, showVegOnly]);
 
   return (
     <div>
       {loading ? (
-        <p>Loading Restaurant count...</p>
+        <p>Loading Restaurant Count....</p>
       ) : error ? (
-        <p>Error: {error}</p>
+        <p> Error: {error} </p>
       ) : (
         <p className="NumOfRestro">
-          {showVegOnly ? pureVegRestaurantCount : count}
+          {showVegOnly ? pureVegRestaurantsCount : count}
           <span className="Restro">
             {showVegOnly
-              ? pureVegRestaurantCount === 1
-                ? " restaurant"
-                : " restaurants"
+              ? pureVegRestaurantsCount === 1
+                ? " Restaurant"
+                : " Restaurants"
               : count === 1
-              ? " restaurant"
-              : " restaurants"}
+              ? " Restaurant"
+              : " Restaurants"}
           </span>
-      <hr />
-      </p>)}
+          <hr />
+        </p>
+      )}
     </div>
   );
-}
+};
 
-export default CountRestaurant
+export default CountRestaurant;
